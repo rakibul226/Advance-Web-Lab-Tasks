@@ -10,7 +10,7 @@ export class ResidentService {
     return { message: 'users' };
   }
 
-  deleteUser(id: string): object {
+  deleteUser(id: number): any {
     return { message: `User with id ${id} deleted` };
   }
 

@@ -7,9 +7,12 @@ import {
   Patch,
   Param,
   Body,
+  UsePipes,
+  ParseIntPipe,
   // Query,
 } from '@nestjs/common';
 import { ResidentService } from './resident.service';
+// import { DeleteUserDto } from './resident.dto';
 
 @Controller('resident')
 export class residentController {
@@ -26,7 +29,7 @@ export class residentController {
   }
 
   @Delete('deleteuser/:id')
-  deleteUser(@Param('id') id: string): object {
+  deleteUser(@Param('id', ParseIntPipe) id: number): any {
     return this.residentService.deleteUser(id);
   }
 
