@@ -2,29 +2,34 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ResidentService {
-  addUser(myobj): any {
-    return myobj;
+  // ------------------------------------------------------------------------------------------
+  addResident(addResidentDTO): any {
+    return addResidentDTO;
   }
 
-  getUsers(): object {
-    return { message: 'users' };
-  }
+  // addUser(myobj): any {
+  //   return myobj;
+  // }
 
-  deleteUser(id: number): any {
-    return { message: `User with id ${id} deleted` };
-  }
+  // getUsers(): object {
+  //   return { message: 'users' };
+  // }
 
-  updateUser(id: string, myobj): any {
-    return `User updated by id ${id} name${myobj.name}`;
-  }
+  // deleteUser(id: number): any {
+  //   return { message: `User with id ${id} deleted` };
+  // }
 
-  updateUserInfo(id: string, myobj): any {
-    return ` info updated for  ${myobj.name}`;
-  }
+  // updateUser(id: string, myobj): any {
+  //   return `User updated by id ${id} name${myobj.name}`;
+  // }
 
-  getUserById(id: string): object {
-    return { message: `Get user  by id ${id}` };
-  }
+  // updateUserInfo(id: string, myobj): any {
+  //   return ` info updated for  ${myobj.name}`;
+  // }
+
+  // getUserById(id: string): object {
+  //   return { message: `Get user  by id ${id}` };
+  // }
 
   //   getUsersByNameAndId(name: string, id: string): object {
   //     return { message: 'You id is ' + name + ' and your id is ' + id };

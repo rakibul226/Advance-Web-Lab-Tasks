@@ -9,44 +9,54 @@ import {
   Body,
   UsePipes,
   ParseIntPipe,
+  ValidationPipe,
   // Query,
 } from '@nestjs/common';
 import { ResidentService } from './resident.service';
+import { AddResidentDTO } from './resident.dto';
 // import { DeleteUserDto } from './resident.dto';
 
 @Controller('resident')
 export class residentController {
   constructor(private readonly residentService: ResidentService) {}
 
-  @Post('adduser')
-  addUser(@Body() myobj): any {
-    return this.residentService.addUser(myobj);
+  @Post('/adduser')
+  @UsePipes(ValidationPipe)
+  addResident(@Body() addResidentDTO: AddResidentDTO): any {
+    console.log('Received DTO:', addResidentDTO);
+    return this.residentService.addResident(addResidentDTO);
   }
 
-  @Get('getuser')
-  getUsers(): object {
-    return this.residentService.getUsers();
-  }
+  // ------------------------------------------------------------------------------------------
+  // @Post('adduser')
+  // addUser(@Body() myobj): any {
+  //   return this.residentService.addUser(myobj);
+  // }
 
-  @Delete('deleteuser/:id')
-  deleteUser(@Param('id', ParseIntPipe) id: number): any {
-    return this.residentService.deleteUser(id);
-  }
+  // @Get('getuser')
+  // getUsers(): object {
+  //   return this.residentService.getUsers();
+  // }
 
-  @Put('updateuser/:id')
-  updateUser(@Param('id') id: string, @Body() myobj): any {
-    return this.residentService.updateUser(id, myobj);
-  }
+  // @Delete('deleteuser/:id')
+  // deleteUser(@Param('id', ParseIntPipe) id: number): any {
+  //   return this.residentService.deleteUser(id);
+  // }
 
-  @Patch('updateUserInfo/:id')
-  updateUserInfo(@Param('id') id: string, @Body() myobj): any {
-    return this.residentService.updateUserInfo(id, myobj);
-  }
+  // @Put('updateuser/:id')
+  // updateUser(@Param('id') id: string, @Body() myobj): any {
+  //   return this.residentService.updateUser(id, myobj);
+  // }
 
-  @Get('getuser/:id')
-  getUserById(@Param('id') id: string): object {
-    return this.residentService.getUserById(id);
-  }
+  // @Patch('updateUserInfo/:id')
+  // updateUserInfo(@Param('id') id: string, @Body() myobj): any {
+  //   return this.residentService.updateUserInfo(id, myobj);
+  // }
+
+  // @Get('getuser/:id')
+  // getUserById(@Param('id') id: string): object {
+  //   return this.residentService.getUserById(id);
+  // }
 
   // @Get('users/')
   // getUsersByNameAndId(
