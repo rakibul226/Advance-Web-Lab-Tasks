@@ -36,6 +36,10 @@ export class AddResidentDTO {
   })
   gender: string;
 
+  @IsNotEmpty()
+  @Matches(/\.jpg$/, { message: 'Profile picture must have a JPG extension' })
+  profilePic: string;
+
   //   @IsPhoneNumber(null, { message: 'Phone number must be valid' })
   //   phoneNumber: number;
 

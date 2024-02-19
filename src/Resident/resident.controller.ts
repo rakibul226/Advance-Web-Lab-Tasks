@@ -23,7 +23,6 @@ export class residentController {
   @Post('/adduser')
   @UsePipes(ValidationPipe)
   addResident(@Body() addResidentDTO: AddResidentDTO): any {
-    console.log('Received DTO:', addResidentDTO);
     return this.residentService.addResident(addResidentDTO);
   }
 
