@@ -5,7 +5,9 @@
 
 import {
   IsEmail,
+  IsIn,
   IsNotEmpty,
+  IsPhoneNumber,
   IsString,
   Matches,
   MinLength,
@@ -27,12 +29,16 @@ export class AddResidentDTO {
   })
   password: string;
 
-  //   @IsString()
-  //   gender: string;
+  @IsNotEmpty()
+  @IsString()
+  @IsIn(['male', 'female'], {
+    message: 'Gender must be either "male" or "female"',
+  })
+  gender: string;
 
-  //   @IsString()
-  //   profilePicture: string;
+  //   @IsPhoneNumber(null, { message: 'Phone number must be valid' })
+  //   phoneNumber: number;
 
-  //   @IsString()
-  //   phoneNumber: string;
+  @Matches(/^[0-9]+$/, { message: 'Phone number must contain only numbers' })
+  phoneNumber: string;
 }
