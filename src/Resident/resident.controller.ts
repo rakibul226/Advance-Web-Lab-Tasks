@@ -20,10 +20,22 @@ import { AddResidentDTO } from './resident.dto';
 export class residentController {
   constructor(private readonly residentService: ResidentService) {}
 
-  @Post('/adduser')
+  @Post('/createuser')
   @UsePipes(ValidationPipe)
   addResident(@Body() addResidentDTO: AddResidentDTO): any {
     return this.residentService.addResident(addResidentDTO);
+  }
+
+  @Patch('/:id/updatestatus')
+  @UsePipes(ValidationPipe)
+  updateResidentStatus(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateResidentStatusDTO: UpdateResidentStatusDTO,
+  ): any {
+    return this.residentService.updateResidentStatus(
+      id,
+      updateResidentStatusDTO.status,
+    );
   }
 
   // ------------------------------------------------------------------------------------------
