@@ -10,6 +10,7 @@ import {
   UsePipes,
   ParseIntPipe,
   ValidationPipe,
+  NotFoundException,
   // Query,
 } from '@nestjs/common';
 import { ResidentService } from './resident.service';
@@ -26,54 +27,74 @@ export class residentController {
     return this.residentService.addResident(addResidentDTO);
   }
 
-  @Patch('/:id/updatestatus')
-  @UsePipes(ValidationPipe)
-  updateResidentStatus(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateResidentStatusDTO: UpdateResidentStatusDTO,
-  ): any {
-    return this.residentService.updateResidentStatus(
-      id,
-      updateResidentStatusDTO.status,
-    );
+  @Patch(':id/status')
+  async updateStatus(
+    @Param('id') id: number,
+    @Body('status') newStatus: string,
+  ): Promise<any> {
+    try {
+      const updatedResident = await this.residentService.updateStatus(
+        id,
+        newStatus,
+      );
+      return { message: 'Status updated successfully', updatedResident };
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return { message: error.message };
+      }
+      throw error;
+    }
   }
-
-  // ------------------------------------------------------------------------------------------
-  // @Post('adduser')
-  // addUser(@Body() myobj): any {
-  //   return this.residentService.addUser(myobj);
-  // }
-
-  // @Get('getuser')
-  // getUsers(): object {
-  //   return this.residentService.getUsers();
-  // }
-
-  // @Delete('deleteuser/:id')
-  // deleteUser(@Param('id', ParseIntPipe) id: number): any {
-  //   return this.residentService.deleteUser(id);
-  // }
-
-  // @Put('updateuser/:id')
-  // updateUser(@Param('id') id: string, @Body() myobj): any {
-  //   return this.residentService.updateUser(id, myobj);
-  // }
-
-  // @Patch('updateUserInfo/:id')
-  // updateUserInfo(@Param('id') id: string, @Body() myobj): any {
-  //   return this.residentService.updateUserInfo(id, myobj);
-  // }
-
-  // @Get('getuser/:id')
-  // getUserById(@Param('id') id: string): object {
-  //   return this.residentService.getUserById(id);
-  // }
-
-  // @Get('users/')
-  // getUsersByNameAndId(
-  //   @Query('name') name: string,
-  //   @Query('id') id: string,
-  // ): object {
-  //   return this.residentService.getUsersByNameAndId(name, id);
-  // }
 }
+
+// @Post(':id/changeStatus')
+// async changeStatus(
+//   @Param('id') id: number,
+//   @Body('status') newStatus: string,
+// ): Promise<any> {
+//   const updatedResident = await this.residentService.changeStatus(
+//     id,
+//     newStatus,
+//   );
+//   return { message: 'Status updated successfully', updatedResident };
+// }
+// }
+
+// ------------------------------------------------------------------------------------------
+// @Post('adduser')
+// addUser(@Body() myobj): any {
+//   return this.residentService.addUser(myobj);
+// }
+
+// @Get('getuser')
+// getUsers(): object {
+//   return this.residentService.getUsers();
+// }
+
+// @Delete('deleteuser/:id')
+// deleteUser(@Param('id', ParseIntPipe) id: number): any {
+//   return this.residentService.deleteUser(id);
+// }
+
+// @Put('updateuser/:id')
+// updateUser(@Param('id') id: string, @Body() myobj): any {
+//   return this.residentService.updateUser(id, myobj);
+// }
+
+// @Patch('updateUserInfo/:id')
+// updateUserInfo(@Param('id') id: string, @Body() myobj): any {
+//   return this.residentService.updateUserInfo(id, myobj);
+// }
+
+// @Get('getuser/:id')
+// getUserById(@Param('id') id: string): object {
+//   return this.residentService.getUserById(id);
+// }
+
+// @Get('users/')
+// getUsersByNameAndId(
+//   @Query('name') name: string,
+//   @Query('id') id: string,
+// ): object {
+//   return this.residentService.getUsersByNameAndId(name, id);
+// }

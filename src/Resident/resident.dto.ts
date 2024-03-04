@@ -13,10 +13,6 @@ export class AddResidentDTO {
   status: string;
 }
 
-export class UpdateResidentStatusDTO {
-  status: 'active' | 'inactive';
-}
-
 // @MinLength(4)
 // name: string;
 // @IsNotEmpty()
