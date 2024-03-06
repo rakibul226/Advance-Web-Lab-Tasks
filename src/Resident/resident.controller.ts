@@ -45,6 +45,20 @@ export class residentController {
       throw error;
     }
   }
+
+  // New endpoint to get users older than 40
+  @Get('/olderThan40')
+  async getUsersOlderThan40(): Promise<any> {
+    try {
+      const usersOlderThan40 = await this.residentService.getUsersOlderThan40();
+      return { usersOlderThan40 };
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return { message: error.message }; // Return only the message
+      }
+      throw error; // Re-throw other errors
+    }
+  }
 }
 
 // @Post(':id/changeStatus')

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ResidentEntity } from './resident.entity';
-import { Repository } from 'typeorm';
+import { MoreThan, Repository } from 'typeorm';
 import { AddResidentDTO } from './resident.dto';
 import { NotFoundException } from '@nestjs/common';
 
@@ -32,6 +32,19 @@ export class ResidentService {
     }
     resident.status = newStatus;
     return await this.residentRepo.save(resident);
+  }
+
+  async getUsersOlderThan40(): Promise<ResidentEntity[]> {
+    // Fetch users older than 40 from the database
+    const usersOlderThan40 = await this.residentRepo.find({
+      where: { age: MoreThan(40) }, // Assuming there's an 'age' property in your Resident entity
+    });
+
+    // If no users found, throw NotFoundException
+    if (!usersOlderThan40 || usersOlderThan40.length === 0) {
+      throw new NotFoundException('No users older than 40 found');
+    }
+    return usersOlderThan40;
   }
 
   // async changeStatus(
