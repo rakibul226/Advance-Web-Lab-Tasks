@@ -59,6 +59,20 @@ export class residentController {
       throw error; // Re-throw other errors
     }
   }
+
+  @Get('/inactiveUsers')
+  async getInactiveUsers(): Promise<any> {
+    try {
+      const inactiveUsers =
+        await this.residentService.getUsersByStatus('inactive');
+      return { inactiveUsers };
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        return { message: error.message };
+      }
+      throw error;
+    }
+  }
 }
 
 // @Post(':id/changeStatus')

@@ -47,6 +47,18 @@ export class ResidentService {
     return usersOlderThan40;
   }
 
+  async getUsersByStatus(status: string): Promise<ResidentEntity[]> {
+    // Fetch users by status from the database
+    const users = await this.residentRepo.find({ where: { status } });
+
+    // If no users found, throw NotFoundException
+    if (!users || users.length === 0) {
+      throw new NotFoundException(`No users with '${status}' status found`);
+    }
+
+    return users;
+  }
+
   // async changeStatus(
   //   userId: number,
   //   newStatus: string,
