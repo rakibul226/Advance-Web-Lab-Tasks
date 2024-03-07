@@ -11,6 +11,8 @@ export class ResidentEntity {
   @Column({ unsigned: true })
   age: number;
 
-  @Column()
+  // @Column()
+  // status: string;
+  @Column({ default: 'active', enum: ['active', 'inactive'] })
   status: string;
 }

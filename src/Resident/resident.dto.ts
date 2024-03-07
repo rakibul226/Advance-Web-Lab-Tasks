@@ -1,4 +1,4 @@
-import { IsIn, IsInt, IsNotEmpty, IsString } from 'class-validator';
+import { IsIn, IsInt, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class AddResidentDTO {
   @IsNotEmpty()
@@ -8,9 +8,11 @@ export class AddResidentDTO {
   @IsInt()
   age: number;
 
-  @IsNotEmpty()
-  @IsIn(['active', 'inactive'])
+  @IsOptional()
   status: string;
+
+  // @IsIn(['active', 'inactive'])
+  // status: string = 'active';
 }
 
 // @MinLength(4)

@@ -2,13 +2,13 @@ import {
   Controller,
   Get,
   Post,
-  Delete,
-  Put,
+  // Delete,
+  // Put,
   Patch,
   Param,
   Body,
   UsePipes,
-  ParseIntPipe,
+  // ParseIntPipe,
   ValidationPipe,
   NotFoundException,
   // Query,
@@ -21,13 +21,15 @@ import { AddResidentDTO } from './resident.dto';
 export class residentController {
   constructor(private readonly residentService: ResidentService) {}
 
+  //create new user
   @Post('/createuser')
   @UsePipes(ValidationPipe)
   addResident(@Body() addResidentDTO: AddResidentDTO): any {
     return this.residentService.addResident(addResidentDTO);
   }
 
-  @Patch(':id/status')
+  //update user status
+  @Patch('/status/:id')
   async updateStatus(
     @Param('id') id: number,
     @Body('status') newStatus: string,
@@ -46,7 +48,7 @@ export class residentController {
     }
   }
 
-  // New endpoint to get users older than 40
+  //get user more than 40
   @Get('/olderThan40')
   async getUsersOlderThan40(): Promise<any> {
     try {
@@ -54,12 +56,13 @@ export class residentController {
       return { usersOlderThan40 };
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return { message: error.message }; // Return only the message
+        return { message: error.message };
       }
-      throw error; // Re-throw other errors
+      throw error;
     }
   }
 
+  //Find user by inactive status
   @Get('/inactiveUsers')
   async getInactiveUsers(): Promise<any> {
     try {

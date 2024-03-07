@@ -12,6 +12,7 @@ export class ResidentService {
     private residentRepo: Repository<ResidentEntity>,
   ) {}
 
+  //create new user
   async addResident(addResidentDTO: AddResidentDTO): Promise<ResidentEntity[]> {
     const newResident = new ResidentEntity();
     newResident.fullName = addResidentDTO.fullName;
@@ -22,6 +23,7 @@ export class ResidentService {
     return [res];
   }
 
+  //update user status
   async updateStatus(
     userId: number,
     newStatus: string,
@@ -34,28 +36,23 @@ export class ResidentService {
     return await this.residentRepo.save(resident);
   }
 
+  //get user more than 40
   async getUsersOlderThan40(): Promise<ResidentEntity[]> {
-    // Fetch users older than 40 from the database
     const usersOlderThan40 = await this.residentRepo.find({
-      where: { age: MoreThan(40) }, // Assuming there's an 'age' property in your Resident entity
+      where: { age: MoreThan(40) },
     });
-
-    // If no users found, throw NotFoundException
     if (!usersOlderThan40 || usersOlderThan40.length === 0) {
       throw new NotFoundException('No users older than 40 found');
     }
     return usersOlderThan40;
   }
 
+  //Find user by inactive status
   async getUsersByStatus(status: string): Promise<ResidentEntity[]> {
-    // Fetch users by status from the database
     const users = await this.residentRepo.find({ where: { status } });
-
-    // If no users found, throw NotFoundException
     if (!users || users.length === 0) {
       throw new NotFoundException(`No users with '${status}' status found`);
     }
-
     return users;
   }
 
